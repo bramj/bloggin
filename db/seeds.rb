@@ -7,7 +7,8 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 today = DateTime.now.to_date
 
-user = User.create(email: "ik@bramjans.com", username: "bram", password: "123456", password_confirmation: "123456")
+user = User.find_by(email: "ik@bramjans.com")
+user = user || User.create(email: "ik@bramjans.com", username: "bram", password: "123456", password_confirmation: "123456")
 
 counter = 0
 

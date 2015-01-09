@@ -4,7 +4,7 @@ class Post < ActiveRecord::Base
 
   belongs_to :user
 
-  scope :draft, -> { where(status: 0) }
-  scope :released, -> { where(status: 1) }
-  scope :deleted, -> { where(status: 2) }
+  scope :draft, -> { where(status: statuses[:draft]) }
+  scope :released, -> { where(status: statuses[:released]) }
+  scope :deleted, -> { where(status: statuses[:deleted]) }
 end
