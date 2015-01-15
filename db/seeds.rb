@@ -17,7 +17,28 @@ title_lamb = lambda do
   "#{counter} - #{Faker::Lorem.sentence}"
 end
 
-body_lamb = lambda { Faker::Lorem.paragraphs(rand(20)).map { |p| "<p>#{p}</p>" }.join }
+code_lamb = lambda do
+  code_snippit = <<-CODE
+class Post < ActiveRecord::Base
+  # Starting from 0
+  enum status: [:draft, :released, :deleted]
+
+  belongs_to :user
+
+  scope :draft, -> { where(status: 0) }
+  scope :released, -> { where(status: 1) }
+  scope :deleted, -> { where(status: 2) }
+end
+CODE
+
+  "<pre><code class=\"ruby\">#{code_snippit}</code></pre>"
+end
+
+body_lamb = lambda do
+  body_arr = Faker::Lorem.paragraphs(rand(20))
+  body_arr += Array.new(rand(5)) { code_lamb.call }
+  body_arr.shuffle.map { |p| "<p>#{p}</p>" }.join
+end
 
 # Old posts
 5.times do
